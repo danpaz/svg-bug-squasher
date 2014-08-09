@@ -1,0 +1,19 @@
+{
+  "name": "svg-bug-squasher",
+  "version": "0.0.1",
+  "homepage": "https://github.com/danpaz/svg-bug-squasher",
+  "authors": [
+    "Daniel Paz-Soldan <daniel.pazsoldan@gmail.com>"
+  ],
+  "description": "A fun bug squashing game built with svg",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "svg.js": "~1.0.0-rc.9"
+  }
+}
