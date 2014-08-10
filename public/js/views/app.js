@@ -55,16 +55,6 @@ define([
       return this;
     },
 
-    showWelcome: function () {
-      var elem = WelcomeView.render();
-      this.$main.html(elem);
-    },
-
-    hideWelcome: function (view) {
-      WelcomeView.$el.hide();
-      console.log('hide', WelcomeView.$el);
-    },
-
     startGame: function () {
       this.hideWelcome();
 
@@ -72,6 +62,16 @@ define([
 
       // Call in the bugs!
       this.bugManager();
+    },
+
+    showWelcome: function () {
+      var elem = WelcomeView.render();
+      WelcomeView.$el.show();
+      this.$main.html(elem);
+    },
+
+    hideWelcome: function (view) {
+      WelcomeView.$el.hide();
     },
 
     // Generate the attributes for a new Bug.

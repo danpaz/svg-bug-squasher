@@ -8,7 +8,7 @@ define([
 
   var WelcomeView = Backbone.View.extend({
 
-    el: '#start-game',
+    el: '#main',
 
     template: _.template(welcomeTemplate),
 
