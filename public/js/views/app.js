@@ -3,10 +3,11 @@ define([
   'underscore',
   'backbone',
   'models/level',
+  'models/score',
   'collections/bugs',
   'views/bugs',
   'text!templates/stats.html'
-], function ($, _, Backbone, Level, Bugs, BugView, statsTemplate) {
+], function ($, _, Backbone, Level, Score, Bugs, BugView, statsTemplate) {
   'use strict';
 
   // Our overall **AppView** is the top-level piece of UI.
@@ -29,6 +30,7 @@ define([
 
       // Bind functions to events.
       this.listenTo(Bugs, 'all', this.render);
+      this.listenTo(Score, 'all', this.render);
 
       // Renders on load. Could also create event 'gamestart'.
       this.render();
@@ -42,10 +44,12 @@ define([
     render: function () {
       var remaining = Bugs.remaining().length;
       var level = Level.attributes.level;
+      var score = Score.attributes.score;
 
       this.$header.html(this.template({
         level: level,
-        remaining: remaining
+        remaining: remaining,
+        score: score
       }));
 
       return this;

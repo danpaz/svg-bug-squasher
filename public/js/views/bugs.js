@@ -2,8 +2,9 @@ define([
   'jquery',
   'underscore',
   'backbone',
+  'models/score',
   'svg'
-], function ($, _, Backbone, SVG) {
+], function ($, _, Backbone, Score, SVG) {
   'use strict';
 
   var BugView = Backbone.View.extend({
@@ -17,7 +18,7 @@ define([
 
     // DOM events specific to a bug.
     events: {
-      // 'g' is the SVG group element.
+      // `g` is the SVG group element.
       "click g": "squash"
     },
 
@@ -28,6 +29,7 @@ define([
 
     squash: function () {
       this.model.squash();
+      Score.increment(1);
     },
 
     // Remove the item, destroy the model, and delete its view.
