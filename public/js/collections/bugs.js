@@ -11,17 +11,17 @@ define([
     {
       type: 'hard',
       size: 10,
-      speed: 1000
+      speed: 10000
     },
     {
       type: 'medium',
       size: 20,
-      speed: 2000
+      speed: 20000
     },
     {
       type: 'easy',
       size: 30,
-      speed: 3000
+      speed: 30000
     }
   ]
 
@@ -52,7 +52,13 @@ define([
 
     draw: function (el, size, speed) {
       var group = _draw(el, size);
-      group.animate(speed, '=').move(1200, 0);
+      // group.animate(speed, '=').move(1200, 0);
+      return group;
+    },
+
+    stop: function (group) {
+      console.log('collection stopped');
+      // group.stop(true);
     },
 
     remaining: function () {

@@ -8,12 +8,12 @@ define([
 
   var WelcomeView = Backbone.View.extend({
 
-    el: '#main',
+    el: '#welcome',
 
     template: _.template(welcomeTemplate),
 
     render: function () {
-      return this.template();
+      return this.$el.html(this.template());
     }
 
   });

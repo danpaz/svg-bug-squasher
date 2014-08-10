@@ -32,10 +32,12 @@ define([
       // Cache our jqueries.
       this.$header = this.$('#header');
       this.$main   = this.$('#main');
+      this.$welcome = this.$('#welcome');
 
       // Bind functions to events.
       this.listenTo(Bugs, 'all', this.render);
       this.listenTo(Score, 'all', this.render);
+      this.listenTo(Backbone, 'bugs:squash', this.stopBug);
 
       // Show the welcome screen on app startup.
       this.showWelcome();
@@ -58,16 +60,19 @@ define([
     startGame: function () {
       this.hideWelcome();
 
-      Bugs.fetch({reset: true});
+      // Bugs.fetch({reset: true});
 
       // Call in the bugs!
       this.bugManager();
     },
 
+    hideMain: function () {
+      this.$main.hide();
+    },
+
     showWelcome: function () {
       var elem = WelcomeView.render();
       WelcomeView.$el.show();
-      this.$main.html(elem);
     },
 
     hideWelcome: function (view) {
@@ -77,6 +82,7 @@ define([
     // Generate the attributes for a new Bug.
     newAttributes: function () {
       return {
+        id: _.uniqueId(),
         name:  Bugs.name(),
         difficulty: Bugs.difficulty()
       };
@@ -101,7 +107,13 @@ define([
 
       var size = bug.attributes.difficulty.size;
       var speed = bug.attributes.difficulty.speed;
-      Bugs.draw(elem, size, speed);
+      var bugGroup = Bugs.draw(elem, size, speed);
+    },
+
+    stopBug: function(bug) {
+      console.log('stopped', bug);
+      // bug.destroy();
+      // Bugs.stop(bug);
     },
 
     // Clear all squashed bugs, destroying their models.

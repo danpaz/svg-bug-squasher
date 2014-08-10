@@ -6,6 +6,8 @@ define([
 
     var Bug = Backbone.Model.extend({
 
+      urlRoot: '/api/bugs',
+
       defaults: {
         alive: true,
         difficulty: 'easy'

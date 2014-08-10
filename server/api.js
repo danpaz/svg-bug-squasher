@@ -1,7 +1,7 @@
 _ = require('underscore');
 
 var Collection, type, err, result,
-    _params, _handleError, _getById, _getAll, _create, _deleteById,
+    _params, _handleError, _getById, _getAll, _create, _updateById, _deleteById,
     urlMap = {
       bugs:   'bugs',
       scores: 'scores'
@@ -50,6 +50,30 @@ _getById = function(req, res) {
   });
 };
 
+_updateById = function(req, res) {
+  _params(req.params, function(err, params) {
+    if (err) {
+      return _handleError(err, res);
+    }
+
+    model = _.findWhere(params.Collection, {id: params.id});
+
+    if (model === undefined) {
+      // Add a model to the array.
+      params.Collection.push(req.body);
+    } else {
+      // TODO: Update existing model.
+      // _.forOwn(req.body, function(value, key) {
+      //   if (_.has(model, key)) {
+      //     model[key] = value;
+      //   }
+      // });
+    }
+
+    res.json(Collection);
+  });
+};
+
 _deleteById = function(req, res) {
   _params(req.params, function(err, params) {
     if (err) {
@@ -58,11 +82,14 @@ _deleteById = function(req, res) {
 
     Collection = params.Collection;
     idToDelete = params.id;
-    console.log('ok');
-    // TODO: Filter out the object and return the modified collection.
-    // Collection = Collection.filter(function(obj) {
-    //   return idToDelete.indexOf(obj.id) === -1;
-    // });
+
+    // Filter out the object and return the modified collection.
+    for (var i = 0; i < Collection.length; i++) {
+      var obj = Collection[i];
+      if (idToDelete.indexOf(obj.id) !== -1) {
+        Collection.splice(i,1);
+      }
+    }
 
     res.json(Collection);
   });
@@ -97,6 +124,7 @@ _create = function(req, res) {
 module.exports = function(router) {
   router.route('/:model/:id')
   .get(_getById)
+  .put(_updateById)
   .delete(_deleteById);
 
   router.route('/:model')
