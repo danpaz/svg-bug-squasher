@@ -29,6 +29,12 @@ define([
 
     squash: function () {
       this.model.squash();
+      var points = 0;
+      console.log(this.model.attributes.difficulty);
+      switch(this.model.difficulty) {
+
+      }
+
       Score.increment(1);
     },
 

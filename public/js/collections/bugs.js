@@ -7,15 +7,31 @@ define([
   'use strict';
 
   // Constants.
-  var SIZES  = [10, 20, 30],
-      SPEEDS = [1000, 2000, 3000];
+  var DIFFICULTIES = [
+    {
+      type: 'hard',
+      size: 10,
+      speed: 1000
+    },
+    {
+      type: 'medium',
+      size: 20,
+      speed: 2000
+    },
+    {
+      type: 'easy',
+      size: 30,
+      speed: 3000
+    }
+  ]
 
   // The poor things have names!
   var NAMES = ['Buggie', 'Bugster', 'Bugonnie', 'Bugs Bunny', 'Bug Wilson',
               'Bugady', 'Misterbug', 'Ladybug', 'Bugs', 'Bugroonie'];
 
   // TODO: variable colors.
-  // Private SVG drawing function.
+  // TODO: random vertical starting position.
+  // Private SVG draw function.
   var _draw = function (el, radius) {
     var draw = SVG(el).size('100%', radius * 2).fixSubPixelOffset();
     var circ = draw.circle(radius * 2).attr({
@@ -34,12 +50,8 @@ define([
 
     url: '/api/bugs',
 
-    draw: function (el) {
-      // Random size and speed.
-      var radius = _.sample(SIZES);
-      var speed  = _.sample(SPEEDS);
-
-      var group = _draw(el, radius);
+    draw: function (el, size, speed) {
+      var group = _draw(el, size);
       group.animate(speed, '=').move(1200, 0);
     },
 
@@ -51,8 +63,12 @@ define([
       return this.where({alive: false});
     },
 
-    name: function() {
-      return _.sample(NAMES, 1);
+    name: function () {
+      return _.sample(NAMES);
+    },
+
+    difficulty: function () {
+      return _.sample(DIFFICULTIES);
     }
 
   });

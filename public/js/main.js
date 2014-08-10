@@ -16,6 +16,7 @@ require.config({
       exports: 'Backbone'
     }
   },
+  // TODO: bower_components folder should be in root dir.
   paths: {
     jquery: '../bower_components/jquery/jquery',
     underscore: '../bower_components/underscore/underscore',

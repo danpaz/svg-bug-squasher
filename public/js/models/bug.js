@@ -7,7 +7,8 @@ define([
     var Bug = Backbone.Model.extend({
 
       defaults: {
-        alive: true
+        alive: true,
+        difficulty: 'easy'
       },
 
       // Dead bug.

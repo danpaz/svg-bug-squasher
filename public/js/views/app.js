@@ -58,7 +58,8 @@ define([
     // Generate the attributes for a new Bug.
     newAttributes: function () {
       return {
-        name:  Bugs.name()
+        name:  Bugs.name(),
+        difficulty: Bugs.difficulty()
       };
     },
 
@@ -79,7 +80,9 @@ define([
       var elem = view.render().el;
       this.$main.append(elem);
 
-      Bugs.draw(elem, 200, 200);
+      var size = bug.attributes.difficulty.size;
+      var speed = bug.attributes.difficulty.speed;
+      Bugs.draw(elem, size, speed);
     },
 
     // Clear all squashed bugs, destroying their models.
