@@ -6,9 +6,13 @@ define([
   'models/score',
   'collections/bugs',
   'views/bugs',
+  'views/welcome',
   'text!templates/stats.html'
-], function ($, _, Backbone, Level, Score, Bugs, BugView, statsTemplate) {
+], function ($, _, Backbone, Level, Score, Bugs, BugView, WelcomeView, statsTemplate) {
   'use strict';
+
+  // Module-level scope.
+  var WelcomeView = new WelcomeView;
 
   // Our overall **AppView** is the top-level piece of UI.
   var AppView = Backbone.View.extend({
@@ -20,7 +24,8 @@ define([
 
     events: {
       'click #bugs-cleanup': 'clearSquashed',
-      'click #bugs-new':     'addBug'
+      'click #bugs-new':     'addBug',
+      'click #start-game':   'startGame'
     },
 
     initialize: function() {
@@ -32,13 +37,8 @@ define([
       this.listenTo(Bugs, 'all', this.render);
       this.listenTo(Score, 'all', this.render);
 
-      // Renders on load. Could also create event 'gamestart'.
-      this.render();
-
-      // Call in the bugs!
-      this.bugManager();
-
-      Bugs.fetch({reset: true});
+      // Show the welcome screen on app startup.
+      this.showWelcome();
     },
 
     render: function () {
@@ -53,6 +53,25 @@ define([
       }));
 
       return this;
+    },
+
+    showWelcome: function () {
+      var elem = WelcomeView.render();
+      this.$main.html(elem);
+    },
+
+    hideWelcome: function (view) {
+      WelcomeView.$el.hide();
+      console.log('hide', WelcomeView.$el);
+    },
+
+    startGame: function () {
+      this.hideWelcome();
+
+      Bugs.fetch({reset: true});
+
+      // Call in the bugs!
+      this.bugManager();
     },
 
     // Generate the attributes for a new Bug.
