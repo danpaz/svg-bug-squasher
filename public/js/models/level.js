@@ -20,12 +20,12 @@ define([
       },
 
       increment: function () {
-        var nextLevel = this.current('level') + 1;
+        var nextLevel = this.attributes.level + 1;
 
         // A simple equation to decrease the interval for each level.
-        var nextInterval = this.current('interval') / nextLevel;
+        var nextInterval = this.attributes.interval / nextLevel;
 
-        var nextNumBugs = this.current('numBugs') + 5;
+        var nextNumBugs = this.attributes.numBugs + 5;
 
         this.set({
           level: nextLevel,

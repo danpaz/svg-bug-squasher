@@ -41,7 +41,7 @@ define([
 
     render: function () {
       var remaining = Bugs.remaining().length;
-      var level = Level.current('level');
+      var level = Level.attributes.level;
 
       this.$header.html(this.template({
         level: level,
@@ -61,8 +61,7 @@ define([
     bugManager: function () {
       var self = this;
       self.addBug();
-      var interval = Level.current('interval');
-
+      var interval = Level.attributes.interval;
       // TODO: enable
       // this.intervalID = window.setInterval(function() {
       //   self.addBug();
