@@ -50,10 +50,8 @@ define([
       var difficulty = this.model.attributes.difficulty.type;
       Score.increment(points(difficulty));
 
-      this.model.destroy();
       this.remove();
-
-      Backbone.trigger('bugs:squash', this.model);
+      this.model.save();
     },
 
     // Remove the item, destroy the model, and delete its view.

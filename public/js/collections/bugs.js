@@ -10,8 +10,8 @@ define([
   var DIFFICULTIES = [
     {
       type: 'hard',
-      size: 10,
-      speed: 10000
+      size: 15,
+      speed: 15000
     },
     {
       type: 'medium',
@@ -52,13 +52,8 @@ define([
 
     draw: function (el, size, speed) {
       var group = _draw(el, size);
-      // group.animate(speed, '=').move(1200, 0);
+      group.animate(speed, '=').move(1200, 0);
       return group;
-    },
-
-    stop: function (group) {
-      console.log('collection stopped');
-      // group.stop(true);
     },
 
     remaining: function () {

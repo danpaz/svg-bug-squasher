@@ -37,20 +37,21 @@ define([
       // Bind functions to events.
       this.listenTo(Bugs, 'all', this.render);
       this.listenTo(Score, 'all', this.render);
-      this.listenTo(Backbone, 'bugs:squash', this.stopBug);
 
       // Show the welcome screen on app startup.
       this.showWelcome();
     },
 
     render: function () {
-      var remaining = Bugs.remaining().length;
+      var squashed = Bugs.squashed().length;
+      var numBugs = Level.attributes.numBugs;
       var level = Level.attributes.level;
       var score = Score.attributes.score;
 
       this.$header.html(this.template({
         level: level,
-        remaining: remaining,
+        squashed: squashed,
+        numBugs: numBugs,
         score: score
       }));
 
@@ -94,7 +95,7 @@ define([
       var interval = Level.attributes.interval;
       // TODO: enable
       // this.intervalID = window.setInterval(function() {
-      //   self.addBug();
+        // self.addBug();
       // }, interval);
     },
 
@@ -108,12 +109,6 @@ define([
       var size = bug.attributes.difficulty.size;
       var speed = bug.attributes.difficulty.speed;
       var bugGroup = Bugs.draw(elem, size, speed);
-    },
-
-    stopBug: function(bug) {
-      console.log('stopped', bug);
-      // bug.destroy();
-      // Bugs.stop(bug);
     },
 
     // Clear all squashed bugs, destroying their models.

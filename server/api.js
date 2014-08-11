@@ -63,13 +63,12 @@ _updateById = function(req, res) {
       params.Collection.push(req.body);
     } else {
       // TODO: Update existing model.
-      // _.forOwn(req.body, function(value, key) {
-      //   if (_.has(model, key)) {
-      //     model[key] = value;
-      //   }
-      // });
+      _.each(req.body, function(value, key) {
+        if (_.has(model, key)) {
+          model[key] = value;
+        }
+      });
     }
-
     res.json(Collection);
   });
 };
