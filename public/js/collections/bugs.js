@@ -64,6 +64,10 @@ define([
       return this.where({alive: false});
     },
 
+    all: function () {
+      return this.models;
+    },
+
     name: function () {
       return _.sample(NAMES);
     },

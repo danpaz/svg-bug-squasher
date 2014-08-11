@@ -23,7 +23,7 @@ define([
     template: _.template(statsTemplate),
 
     events: {
-      'click #bugs-cleanup': 'clearSquashed',
+      'click #bugs-cleanup': 'endGame',
       'click #bugs-new':     'addBug',
       'click #start-game':   'startGame'
     },
@@ -61,10 +61,15 @@ define([
     startGame: function () {
       this.hideWelcome();
 
-      // Bugs.fetch({reset: true});
-
       // Call in the bugs!
       this.bugManager();
+    },
+
+    endGame: function () {
+      window.clearInterval(this.intervalID);
+      this.clearAll();
+      console.log('ended');
+      return false;
     },
 
     hideMain: function () {
@@ -93,10 +98,10 @@ define([
       var self = this;
       self.addBug();
       var interval = Level.attributes.interval;
-      // TODO: enable
-      // this.intervalID = window.setInterval(function() {
-        // self.addBug();
-      // }, interval);
+
+      this.intervalID = window.setInterval(function() {
+        self.addBug();
+      }, interval);
     },
 
     // Adds a new bug to the collection and to the view.
@@ -111,10 +116,9 @@ define([
       var bugGroup = Bugs.draw(elem, size, speed);
     },
 
-    // Clear all squashed bugs, destroying their models.
-    // TODO this doesn't yet sync with the server.
-    clearSquashed: function () {
-      _.invoke(Bugs.squashed(), 'destroy');
+    // Clear all  bugs, destroying their models.
+    clearAll: function () {
+      _.invoke(Bugs.all(), 'destroy');
       return false;
     }
 
